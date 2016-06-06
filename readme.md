@@ -1,2 +1,2 @@
-#spoj
+spoj
 sdsd
