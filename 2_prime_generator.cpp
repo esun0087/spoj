@@ -40,7 +40,7 @@ int main()
                 start = 0;
             if((start + m) / i == 1)
                 start += i;
-            for(int j = start; j <= len ; j += i)
+            for(int j = start; j < len ; j += i)
             {
                 
                 be_prime[j] = false;
