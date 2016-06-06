@@ -1,2 +1,2 @@
 spoj
-sdsd
+sth about spoj code
