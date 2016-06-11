@@ -31,6 +31,7 @@ def process_line(line):
         if cur == L:
             tmp.append(1)
         
+        
 for i in range(t):
     line = input()
     line = line.strip()
