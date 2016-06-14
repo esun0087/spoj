@@ -6,55 +6,160 @@ def process_add(a, b):
     b = b[::-1]
     L = max(len(a), len(b))
     min_l = min(len(a), len(b))
-    ans = [0 for i in range(L+10)]
+    ans = [0 for i in range(L+1)]
     add_data = 0
     for i in range(min(len(a), len(b))):
         x = a[i] + b[i] + add_data
         add_data = x // 10
         ans[i] = x % 10
-    ans[min_l] = add_data
+    if len(a) > len(b):
+        for i in range(len(b), len(a)):
+            x = ans[i] + add_data + a[i]
+            add_data = x // 10
+            ans[i] = x % 10
+    elif len(a) < len(b):
+        for i in range(len(a), len(b)):
+            x = ans[i] + add_data + b[i]
+            add_data = x // 10
+            ans[i] = x % 10
+    else:
+        ans[min_l] = add_data
+    ans = ans[::-1]
+    max_len = L+1
+    ans_pos = 0
+    for i, k in enumerate(ans):
+        if k != 0:
+            if len(ans) - i >= max_len:
+                max_len = len(ans) - i
+            ans_pos = i
+            break
+    ans = [str(i) for i in ans]
+    a = ''.join([str(i) for i in a[::-1]])
+    b = ''.join([str(i) for i in b[::-1]])
+    print (' '*(max_len - len(a))+a)
+    print (' '*(max_len - len(b) - 1) + '+' + b)
+    print ('-' * (max_len))
+    print (' '* (max_len - (len(ans) - ans_pos)) + ''.join(ans[ans_pos:]))
     return ans[::-1]
 
 def process_reduce(a, b):
     L = max(len(a), len(b))
     a = a[::-1]
     b = b[::-1]
-    min_l = min(len(a). len(b))
-    ans = [0 for i in range(L+10)]
+    ans = [0 for i in range(L+1)]
     reduce_data = 0
     for i in range(min(len(a), len(b))):
-        a[i] -= reduce_data
-        if a[i] < b[i]:
-            a[i] += 10
+        t = a[i] - reduce_data
+        if t < b[i]:
+            t += 10
             reduce_data = 1
         else:
             reduce_data = 0
-        x = a[i] - b[i]
+        x = t - b[i]
         ans[i] = x
+    for i in range(len(b), len(a)):
+        t = a[i] - reduce_data
+        if t < 0:
+            t += 10
+            reduce_data = 1
+        else:
+            reduce_data = 0
+        x = t - 0
+        ans[i] = x
+    ans = ans[::-1]
+    max_len = L+1
+    ans_pos = 0
+    for i, k in enumerate(ans):
+        if k != 0:
+            if len(ans) - i >= max_len:
+                max_len = len(ans) - i
+            ans_pos = i
+            break
+    ans = [str(i) for i in ans]
+    a = ''.join([str(i) for i in a[::-1]])
+    b = ''.join([str(i) for i in b[::-1]])
+    print (' '*(max_len - len(a))+a)
+    print (' '*(max_len - len(b) - 1) + '-' + b)
+    print ('-' * (max_len))
+    print (' '* (max_len - (len(ans) - ans_pos)) + ''.join(ans[ans_pos:]))
     return ans[::-1]
 
-def process_mul(a, b):
+def help_add(a, b):
+    a = a[::-1]
+    b = b[::-1]
+    L = max(len(a), len(b))
+    min_l = min(len(a), len(b))
+    ans = [0 for i in range(L+1)]
     add_data = 0
+    for i in range(min(len(a), len(b))):
+        x = a[i] + b[i] + add_data
+        add_data = x // 10
+        ans[i] = x % 10
+    if len(a) > len(b):
+        for i in range(len(b), len(a)):
+            x = ans[i] + add_data + a[i]
+            add_data = x // 10
+            ans[i] = x % 10
+    elif len(a) < len(b):
+        for i in range(len(a), len(b)):
+            x = ans[i] + add_data + b[i]
+            add_data = x // 10
+            ans[i] = x % 10
+    else:
+        ans[min_l] = add_data
+    ans = ans[::-1]
+    return ans
+def process_mul(a, b):
+    
     a = a[::-1]
     b = b[::-1]
     L = max(len(a), len(b))
     ans = []
     for j in range(len(b)):
-        tmp_ans = [0 for xx in range(L * 2 + 10)]
+        tmp_ans = [0 for xx in range(len(a) + 1)]
+        add_data = 0
         for i in range(len(a)):
             x = a[i] * b[j] + add_data
             add_data = x // 10
             x = x % 10
-            tmp_ans[i+j] = x
-        tmp_ans[len(a)+j] = add_data
+            tmp_ans[i] = x
+        tmp_ans[len(a)] = add_data
         ans.append(tmp_ans[::-1])
-    final_ans = [0 for i in range(L * 2 + 10)]
+    final_ans = [0 for i in range(len(a) + len(b) + 1)]
+
     if len(ans) <= 1:
-        ans.append(ans[0])
+        pass
     else:
-        for tmp in ans:
-            final_ans = process_add(final_ans, tmp)
+        for i, tmp in enumerate(ans):
+            final_ans = help_add(final_ans, tmp+[0] * i)
         ans.append(final_ans)
+    ans_pos = 0
+    max_len = max(len(a), len(b) + 1)
+    for i, k in enumerate(ans[-1]):
+        if k != 0:
+            if len(ans[-1]) - i >= max_len:
+                max_len = len(ans[-1]) - i
+            ans_pos = i
+            break
+    a = ''.join([str(i) for i in a[::-1]])
+    b = ''.join([str(i) for i in b[::-1]])
+    print (' '*(max_len - len(a))+a)
+    print (' '*(max_len - len(b) - 1) + '*' + b)
+    print ('-' * (max_len))
+    tag = False
+    for i, arr in enumerate(ans):
+        tmp = ''.join([str(i) for i in arr])
+        if i == len(ans) - 1:
+            if tag:
+                print ('-' * (max_len))
+            print (' '* (max_len - (len(tmp) - ans_pos)) + ''.join(tmp[ans_pos:]))
+        else:
+            tag = True
+            if tmp == '0' * len(tmp):
+                print (' '*(max_len - i-1)+'0')
+            else:
+                print (' '*(max_len - len(tmp)-i)+tmp)
+
     return ans
 
 for j in range(t):
@@ -66,11 +171,11 @@ for j in range(t):
             a = [int(i) for i in list(a)]
             b = [int(i) for i in list(b)]
             if op == '+':
-                ans = process_add(a, b)
+                process_add(a, b)
             if op == '-':
-                ans = process_reduce(a, b)
+                process_reduce(a, b)
             if op == '*':
-                ans = process_mul(a, b)
+                process_mul(a, b)
             break
             
     
