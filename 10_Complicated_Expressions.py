@@ -82,22 +82,31 @@ def print_node(node):
         print_node(l_node)
         if l_node.value not in letters:
             print (')', end = '')
-        print (node.value, end = '')
-        print_node(r_node)
     if print_oper[node.value] == print_oper[l_node.value]:
         print_node(l_node)
-        if node.value == '-' or node.value == '/':
-            print ('(', end = '')
-            print (node.value, end = '')
-            print (')', end='')
-            print_node(r_node)
-        else:
-            print (node.value, end = '')
-            print_node(r_node)
     if print_oper[node.value] < print_oper[l_node.value]:
         print_node(l_node)
-        print (node.value, end = '')
+    print (node.value, end = '')
+
+    if print_oper[node.value] > print_oper[r_node.value]:
+        if r_node.value not in letters:
+            print ('(', end='')
         print_node(r_node)
+        if r_node.value not in letters:
+            print (')', end = '')
+    if print_oper[node.value] == print_oper[r_node.value]:
+        if node.value == '-' or node.value == '/':
+            if r_node.value not in letters:
+                print ('(', end='')
+            print_node(r_node)
+            if r_node.value not in letters:
+                print (')', end = '')
+        else:
+            print_node(r_node)
+    if print_oper[node.value] < print_oper[r_node.value]:
+        print_node(r_node)
+
+
 for i in range(t):
     line = input()
     line = line.strip()
