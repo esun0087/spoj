@@ -11,6 +11,7 @@ bool in(int y)
 		return true;
 	return false;
 }
+
 bool door(int x, int y)
 {
 	int i, j;
@@ -60,14 +61,14 @@ int main()
 			flag = false;
 			for (j = 0; j <= mm - m; j++)
 			{
-				if (!visit[i][j] && (visit[i - 1][j] || (in(j - 1) && visit[i][j - 1]) || (in(j + 1) && visit[i][j + 1])))
+	//			if (!visit[i][j] && (visit[i - 1][j] || (in(j - 1) && visit[i][j - 1]) || (in(j + 1) && visit[i][j + 1])))
 				{
 					if (door(i, j))
 					{
 						flag = true;
-						visit[i][j] = true;
-						if (j>0 && !visit[i][j - 1])
-							j -= 2;
+	//					visit[i][j] = true;
+	//					if (j>0 && !visit[i][j - 1])
+	//						j -= 2;
 					}
 				}
 			}
