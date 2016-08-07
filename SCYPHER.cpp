@@ -21,38 +21,8 @@
 #include <iomanip>
 //#pragma comment(linker, "/STACK:102400000,102400000")
 
-using std::priority_queue;
-using std::vector;
-using std::swap;
-using std::stack;
-using std::sort;
-using std::max;
-using std::min;
-using std::pair;
-using std::map;
-using std::string;
-using std::cin;
-using std::cout;
-using std::set;
-using std::queue;
-using std::string;
-using std::stringstream;
-using std::make_pair;
-using std::getline;
-using std::greater;
-using std::endl;
-using std::multimap;
-using std::deque;
-using std::unique;
-using std::lower_bound;
-using std::random_shuffle;
-using std::bitset;
-using std::upper_bound;
-using std::multiset;
-using std::ios;
-using std::make_heap;
-using std::push_heap;
-using std::pop_heap;
+using namespace std;
+
 
 typedef long long LL;
 typedef unsigned long long ULL;
